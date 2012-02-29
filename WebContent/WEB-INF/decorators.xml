@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<decorators defaultdir="/WEB-INF/decorators">
+
+	<decorator name="index" page="index.jsp">
+		<pattern>/*</pattern>
+	</decorator>
+	
+<!-- 	<decorator name="login" page="index.jsp"> -->
+<!-- 		<pattern>/login</pattern> -->
+<!-- 	</decorator> -->
+
+	<decorator name="agenda" page="agenda.jsp">
+		<pattern>/agenda</pattern>
+	</decorator>
+
+	<decorator name="agenda" page="agenda.jsp">
+		<pattern>/agenda/*</pattern>
+	</decorator>
+
+	<decorator name="dser" page="dser.jsp">
+		<pattern>/dser</pattern>
+	</decorator>
+
+	<decorator name="dser" page="dser.jsp">
+		<pattern>/dser/*</pattern>
+	</decorator>
+	
+	<decorator name="dusr" page="dusr.jsp">
+		<pattern>/dusr</pattern>
+	</decorator>
+
+	<decorator name="dusr" page="dusr.jsp">
+		<pattern>/dusr/*</pattern>
+	</decorator>
+	
+	<decorator name="dest" page="dest.jsp">
+		<pattern>/dest</pattern>
+	</decorator>
+
+	<decorator name="dest" page="dest.jsp">
+		<pattern>/dest/*</pattern>
+	</decorator>
+
+
+<!-- 	<excludes> -->
+<!-- 		<pattern>/login*</pattern> -->
+<!-- 		<pattern>/*?exclude*</pattern> -->
+<!-- 	</excludes> -->
+
+</decorators>
