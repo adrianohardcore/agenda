@@ -11,8 +11,8 @@ public interface AgendaRepository extends GenericRepository<Agenda> {
 
 	Collection<Agenda> listByFilter(String search, int page, String sortName, String sortOrder, String find, int rows);
 	
-	public int CarregaNumCod();
+	public int CarregaNumCod() throws Exception;
 	
-	public void saveCod(Integer id);
+	public void saveCod(Integer id) throws Exception;
 
 }

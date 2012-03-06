@@ -5,6 +5,7 @@ import java.util.Collection;
 import model.Agenda;
 import model.common.EntityWrapper;
 import repository.AgendaRepository;
+import annotation.Public;
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
@@ -28,7 +29,7 @@ public class AgendaController {
 		this.validator = validator;	
 	}
 
-
+	@Public
 	@Get("/agenda/{agenda.id}/editar")
 	public void editar(Agenda agenda) {
 	  agenda = repository.loadById(agenda.getId());
@@ -37,19 +38,20 @@ public class AgendaController {
 	  
 	}
 
+	@Public
 	@Get("/agenda/{agenda.id}")
 	public void exibir(Agenda agenda) {
 		agenda = repository.loadById(agenda.getId());		
 		result.include("agenda", agenda);
 	}	
 
-	//@Public
+	@Public
 	@Get("/agenda")
 	public void listagem() {
 
 	}
 
-	//@Public
+	@Public
 	@Get("/agenda/gridy")
 	public void listByFilter(String search, int page, String sortName, String sortOrder, String find, int rows) {
 		Collection<Agenda> agendaList = repository.listByFilter(search, page, sortName, sortOrder, find, rows);
@@ -62,11 +64,13 @@ public class AgendaController {
 		.serialize();
 	}
 
+	@Public
 	@Get("/agenda/novo")
 	public void novo() {
 
 	}
-
+	
+	@Public
 	@Delete("/agenda/{agenda.id}")
 	public void remover(Agenda agenda) {
 	  repository.remove(agenda.getId());
@@ -76,16 +80,20 @@ public class AgendaController {
 	  .redirectTo(this).listagem();
 	}
 	
+	@Public
 	@Post("/agenda")
-	public void salvar(final Agenda agenda) {
+	public void salvar(final Agenda agenda) throws Exception {
 		Integer num = 0 ;
 		if (agenda.getId() == null){
-			num = repository.CarregaNumCod();
+			num = repository.CarregaNumCod(); 
+			System.out.println("####################################AtenÃ§Ã£o");
+			System.out.println(num);
+			
 			agenda.setId((int) num);			
 		}		
 		validator.validate(agenda);
 		validator.checking(new Validations(){{			
-			that(agenda.getAgdnome().isEmpty() == false,"erro", "O Nome não pode ser vazio");			
+			that(agenda.getAgdnome().isEmpty() == false,"erro", "O Nome nï¿½o pode ser vazio");			
 		}});		
 		validator.onErrorUsePageOf(this).novo();
 		repository.save(agenda);
@@ -93,7 +101,7 @@ public class AgendaController {
 			repository.saveCod(num);	
 		}		
 		result
-		.include("message", "Contato código "+ agenda.getId() + " salvo com sucesso!!!" )
+		.include("message", "Contato cï¿½digo "+ agenda.getId() + " salvo com sucesso!!!" )
 		.redirectTo(this).listagem();	
 	}
 }

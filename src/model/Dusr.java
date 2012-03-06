@@ -45,7 +45,8 @@ public class Dusr extends AbstractEntity {
     @Basic(optional = false)
     @NotNull
     @Column(name = "dusrstabl")
-    private char dusrstabl;
+    @Length(max = 1)
+    private String dusrstabl;
     @Basic(optional = false)
     @NotNull
     @Length( max = 40)
@@ -92,7 +93,8 @@ public class Dusr extends AbstractEntity {
     @Basic(optional = false)
     @NotNull
     @Column(name = "dusrHab")
-    private char dusrHab;
+    @Length(max = 1)
+    private String dusrHab;
     @Basic(optional = false)
     @NotNull
     @Column(name = "dusrRepB")
@@ -182,7 +184,8 @@ public class Dusr extends AbstractEntity {
     @Basic(optional = false)
     @NotNull
     @Column(name = "dusrMtip")
-    private char dusrMtip;
+    @Length(max = 1)
+    private String dusrMtip;
     @Basic(optional = false)
     @NotNull
     @Length( max = 2)
@@ -320,7 +323,7 @@ public class Dusr extends AbstractEntity {
 		return dusrdtnas;
 	}
 	
-	public char getDusrstabl() {
+	public String getDusrstabl() {
 		return dusrstabl;
 	}
 	
@@ -360,7 +363,7 @@ public class Dusr extends AbstractEntity {
 		return dusrCPF.trim();
 	}
 	
-	public char getDusrHab() {
+	public String getDusrHab() {
 		return dusrHab;
 	}
 	
@@ -444,7 +447,7 @@ public class Dusr extends AbstractEntity {
 		return dusrEstB3;
 	}
 	
-	public char getDusrMtip() {
+	public String getDusrMtip() {
 		return dusrMtip;
 	}
 	
@@ -572,7 +575,7 @@ public class Dusr extends AbstractEntity {
 		this.dusrdtnas = dusrdtnas;
 	}
 
-	public void setDusrstabl(char dusrstabl) {
+	public void setDusrstabl(String dusrstabl) {
 		this.dusrstabl = dusrstabl;
 	}
 
@@ -612,7 +615,7 @@ public class Dusr extends AbstractEntity {
 		this.dusrCPF = dusrCPF;
 	}
 
-	public void setDusrHab(char dusrHab) {
+	public void setDusrHab(String dusrHab) {
 		this.dusrHab = dusrHab;
 	}
 
@@ -696,7 +699,7 @@ public class Dusr extends AbstractEntity {
 		this.dusrEstB3 = dusrEstB3;
 	}
 
-	public void setDusrMtip(char dusrMtip) {
+	public void setDusrMtip(String dusrMtip) {
 		this.dusrMtip = dusrMtip;
 	}
 

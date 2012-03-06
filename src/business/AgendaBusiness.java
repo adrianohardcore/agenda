@@ -3,6 +3,7 @@ package business;
 import java.util.Collection;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import model.Agenda;
@@ -57,21 +58,39 @@ public class AgendaBusiness extends GenericBusiness<Agenda> implements AgendaRep
 		return resultList;
 	}	
 	
-	public int CarregaNumCod() {
-		Agenda agenda ;
-		Integer serial,id = 0;				
-		serial = dserRepository.getSerial(0, "AGD");
-		while (id == 0) { 
-			serial ++;
-			try {				
-				agenda = manager.find(Agenda.class, serial);				
-				agenda.getId();		
+	public int CarregaNumCod() throws Exception {					
+		try {
+			Agenda agenda ;
+			Integer serial,id = 0;
+			serial = dserRepository.getSerial(0, "AGD");
+			
+			while (id == 0) { 
+				serial ++;
+				try {				
+					agenda = manager.find(Agenda.class, serial);				
+					agenda.getId();		
+				}			
+				catch (Exception e) {
+					id = 1 ;				
+				}				
 			}			
-			catch (Exception e) {
-				id = 1 ;				
-			}				
-		}			
-		return serial;
+			return serial;
+		
+		}
+		catch (NoResultException e) {			
+			throw new Exception("####################### Nenhum resultado!");
+		}
+		 catch (Exception e) {
+			 throw new Exception("####################### Erro Geral!");
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 	}		
 
 	public void saveCod(Integer id) {		

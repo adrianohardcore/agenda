@@ -1,8 +1,6 @@
 package controller;
 
-import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.Date;
 
 import model.Dusr;
 import model.common.EntityWrapper;
@@ -43,6 +41,12 @@ public class DusrController {
 	  dusr = repository.loadById(dusr.getId());
 	  result.include("dusr", dusr);
 	}
+	
+	public void existe(Dusr dusr) {
+		  dusr = repository.loadById(dusr.getId());
+		  result.include("dusr", dusr);
+		}
+	
 	
 	@Public
 	@Get("/dusr/{dusr.id}")
