@@ -16,7 +16,7 @@ public class DusrRules {
 		dusr.setDusrnome("");
 		dusr.setDusrsenha("");
 		dusr.setDusrdtnas(new Date());
-		dusr.setDusrstabl(' ');
+		dusr.setDusrstabl("");
 		dusr.setDusrend("");
 		dusr.setDusrbai("");		
 		dusr.setDusrcid("");
@@ -26,7 +26,7 @@ public class DusrRules {
 		dusr.setDusresp("");
 		dusr.setDusrobs("");
 		dusr.setDusrCPF("");
-		dusr.setDusrHab(' ');
+		dusr.setDusrHab("");
 		dusr.setDusrRepB(0);
 		dusr.setDusrEstB((short) 0);
 		dusr.setDusrdtalt(new Date());
@@ -47,7 +47,7 @@ public class DusrRules {
 		dusr.setDusrXestB((short) 0);
 		dusr.setDusrEstB2((short) 0);
 		dusr.setDusrEstB3((short) 0);
-		dusr.setDusrMtip(' ');
+		dusr.setDusrMtip("");
 		dusr.setDusrUF("");
 		dusr.setDusrHabVal(new Date());
 		dusr.setDusrPDV((short) 0);
@@ -101,11 +101,6 @@ public class DusrRules {
 		if(dusr.getDusrdtadm ()== null){
 			dusr.setDusrdtadm (new Date()); 
 		}
-		if(dusr.getDusrstabl() == ' '){
-			dusr.setDusrstabl('A');
-			
-		}
-		
 		
 		
 		return dusr;		
