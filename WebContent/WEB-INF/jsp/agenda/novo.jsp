@@ -9,22 +9,19 @@
 		<div class="formulario">
 
 			<input type="hidden" name="agenda.id"   value="${agenda.id}" />			
-			<input type="hidden" name="agenda.agddtalt"
-				value="${agenda.agddtalt}" /> <input type="hidden"
-				name="agenda.agdusr" value="${agenda.agdusr}" /> <input
-				type="hidden" name="agenda.agduf4" value="${agenda.agduf4}" /> <input
-				type="hidden" name="agenda.agduf5" value="${agenda.agduf5}" /> <input
-				type="hidden" name="agenda.agdddd4" value="${agenda.agdddd4}" /> <input
-				type="hidden" name="agenda.agdddd5" value="${agenda.agdddd5}" /> <input
-				type="hidden" name="agenda.agdtel4" value="${agenda.agdtel4}" /> <input
-				type="hidden" name="agenda.agdtel5" value="${agenda.agdtel5}" /> <input
-				type="hidden" name="agenda.agdcont4" value="${agenda.agdcont4}" />
-			<input type="hidden" name="agenda.agdcont5"
-				value="${agenda.agdcont5}" /> <input type="hidden"
-				name="agenda.agdRPL" value="${agenda.agdRPL}" /> <input
-				type="hidden" name="agenda.agdEndNr" value="${agenda.agdEndNr}" />
-			<input type="hidden" name="agenda.agdEndCompl"
-				value="${agenda.agdEndCompl}" /> 
+<%-- 			<input type="hidden" name="agenda.agddtalt" value="${agenda.agddtalt}" />  --%>
+			<input type="hidden" name="agenda.agdusr" value="${agenda.agdusr}" /> 
+			<input type="hidden" name="agenda.agduf4" value="${agenda.agduf4}" /> 
+			<input type="hidden" name="agenda.agduf5" value="${agenda.agduf5}" /> 
+			<input type="hidden" name="agenda.agdddd4" value="${agenda.agdddd4}" /> 
+			<input type="hidden" name="agenda.agdddd5" value="${agenda.agdddd5}" /> 
+			<input type="hidden" name="agenda.agdtel4" value="${agenda.agdtel4}" /> 
+			<input type="hidden" name="agenda.agdtel5" value="${agenda.agdtel5}" /> 
+			<input type="hidden" name="agenda.agdcont4" value="${agenda.agdcont4}" />
+			<input type="hidden" name="agenda.agdcont5" value="${agenda.agdcont5}" /> 
+			<input type="hidden" name="agenda.agdRPL" value="${agenda.agdRPL}" /> 
+			<input type="hidden" name="agenda.agdEndNr" value="${agenda.agdEndNr}" />
+			<input type="hidden" name="agenda.agdEndCompl" value="${agenda.agdEndCompl}" /> 
 				
 			<div class="celula">	
 			<label> Código </label>			

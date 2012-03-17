@@ -7,13 +7,9 @@ import br.com.caelum.vraptor.Resource;
 public class IndexController {
 
 	public IndexController() {
-
 	}
-	
 	
 	@Get("/")
 	public void index() {
-
 	}
-
 }

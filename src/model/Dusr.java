@@ -49,8 +49,12 @@ public class Dusr extends AbstractEntity {
 
 	@Basic(optional = false)
 	@NotNull
+	@Length( max = 1)
 	@Column(name = "dusrstabl")
-	private char dusrstabl;
+	private String dusrstabl;
+	
+	
+	
 	@Basic(optional = false)
 	@NotNull
 	@Length( max = 40)
@@ -114,7 +118,7 @@ public class Dusr extends AbstractEntity {
 	@Basic(optional = false)
 	@NotNull
 	@Column(name = "dusrusr")
-	private short dusrusr;
+	private short dusrusr;  
 	@Basic(optional = false)
 	@NotNull
 	@Length( max = 40)
@@ -335,11 +339,11 @@ public class Dusr extends AbstractEntity {
 		return dusrdtnas;
 	}
 
-	public char getDusrstabl() {
-		if (dusrstabl == ' '){
-			dusrstabl = 'A';		  
+	public String getDusrstabl() {
+		if (dusrstabl == null){
+			dusrstabl = "";		  
 		}
-		return dusrstabl;
+		return dusrstabl.trim();
 	}
 
 	public String getDusrend() {
@@ -414,12 +418,7 @@ public class Dusr extends AbstractEntity {
 		return dusrEstB;
 	}
 
-	public Date getDusrdtalt() {
-		if (dusrdtalt == null){
-			dusrdtalt = new Date();		
-		}
-		return dusrdtalt;
-	}
+	
 
 	public short getDusrusr() {
 
@@ -670,7 +669,8 @@ public class Dusr extends AbstractEntity {
 
 	public byte[] getDusrFotoB() {
 		if (dusrFotoB == null){
-			dusrFotoB = ("").getBytes();		
+			//dusrFotoB = ("").getBytes();
+			System.err.println("Erro ao carregar imagem.Foto vazia");
 		}
 		return dusrFotoB;
 	}
@@ -704,7 +704,10 @@ public class Dusr extends AbstractEntity {
 		this.dusrdtnas = dusrdtnas;
 	}
 
-	public void setDusrstabl(char dusrstabl) {		
+	public void setDusrstabl(String dusrstabl) {	
+		if (dusrstabl == null){
+			dusrstabl = "";		
+		}
 		this.dusrstabl = dusrstabl;
 	}
 
@@ -780,12 +783,7 @@ public class Dusr extends AbstractEntity {
 		this.dusrEstB = dusrEstB;
 	}
 
-	public void setDusrdtalt(Date dusrdtalt) {
-		if (dusrdtalt == null){
-			dusrdtalt = new Date();
-		}
-		this.dusrdtalt = dusrdtalt;
-	}
+	
 
 	public void setDusrusr(short dusrusr) {
 
@@ -920,7 +918,8 @@ public class Dusr extends AbstractEntity {
 
 	public void setDusrFotoB(byte[] dusrFotoB) {
 		if (dusrFotoB == null){
-			dusrFotoB = ("").getBytes();		
+			//dusrFotoB = ("").getBytes();
+			System.err.println("Erro ao inserir imagem.Foto vazia");
 		}
 		this.dusrFotoB = dusrFotoB;
 	}
@@ -1032,5 +1031,17 @@ public class Dusr extends AbstractEntity {
 	public void setDusrPerfil(short dusrPerfil) {
 
 		this.dusrPerfil = dusrPerfil;
+	}
+
+	public Date getDusrdtalt() {
+		if (dusrdtalt == null){
+			GregorianCalendar dataVazia = new GregorianCalendar(1900, 1, 1);
+			dusrdtalt = dataVazia.getTime();			
+		}
+		return dusrdtalt;
+	}
+
+	public void setDusrdtalt(Date dusrdtalt) {
+		this.dusrdtalt = new Date();
 	}
 }

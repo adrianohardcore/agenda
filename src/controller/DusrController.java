@@ -1,67 +1,84 @@
 package controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Collection;
 
 import model.Dusr;
 import model.common.EntityWrapper;
+import model.common.UsuarioStatus;
 import repository.DusrRepository;
-import rules.DusrRules;
 import util.Encriptacao;
-import annotation.Public;
+import util.UploadFoto;
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
+import br.com.caelum.vraptor.interceptor.download.Download;
+import br.com.caelum.vraptor.interceptor.download.FileDownload;
+import br.com.caelum.vraptor.interceptor.multipart.UploadedFile;
 import br.com.caelum.vraptor.validator.Validations;
 import br.com.caelum.vraptor.view.Results;
 
-
+import component.UserSession;
 
 @Resource
 public class DusrController {
 
 	private final DusrRepository repository;
 	private final Result result;
-	private final Validator validator;
-	private final DusrRules dusrRules;
-	
+	private final Validator validator;	
+	private final UserSession userSession;
+	private final UploadFoto uploadFoto;
 
-	public DusrController(Result result, DusrRepository repository, Validator validator, DusrRules dusrRules) {
+	public DusrController(Result result, DusrRepository repository, Validator validator, UserSession userSession ,UploadFoto uploadFoto) {
 		this.result = result;
 		this.repository = repository;
-		this.validator = validator;
-		this.dusrRules = dusrRules;	
-	}
+		this.validator = validator;		             
+		this.userSession = userSession;
+		this.uploadFoto = uploadFoto;	
+	}                    
 
-	@Public
+
 	@Get("/dusr/{dusr.id}/editar")
 	public void editar(Dusr dusr) {
-	  dusr = repository.loadById(dusr.getId());
-	  result.include("dusr", dusr);
+		dusr = repository.loadById(dusr.getId());
+		result.include("UsuarioStatus", UsuarioStatus.values());
+		result.include("dusr", dusr);					
 	}
-	
-	public void existe(Dusr dusr) {
-		  dusr = repository.loadById(dusr.getId());
-		  result.include("dusr", dusr);
-		}
-	
-	
-	@Public
+
+
 	@Get("/dusr/{dusr.id}")
 	public void exibir(Dusr dusr) {
 		dusr = repository.loadById(dusr.getId());		
 		result.include("dusr", dusr);
 	}		
+
+
+	@Get("/dusr/existe/{dusr.id}")  
+    public void existe(Dusr dusr) {  
+		dusr = repository.loadById(dusr.getId());   
+        if (dusr != null){  
+            System.out.println("Usuário encontrado");                 
+            result.include("dusr", dusr);  
+        }else{  
+            System.out.println("Usuário não encontrado");     
+            result.notFound();  
+        }     
+    }  
 	
-	@Public
+	
+	
+
+
 	@Get("/dusr")
 	public void listagem() {
+	}	
 
-	}
-	
-	@Public
+
+
 	@Get("/dusr/gridy")
 	public void listByFilter(String search, int page, String sortName, String sortOrder, String find, int rows) {
 		Collection<Dusr> dusrList = repository.listByFilter(search, page, sortName, sortOrder, find, rows);
@@ -74,54 +91,103 @@ public class DusrController {
 		.serialize();
 	}
 
-	@Public
+
 	@Get("/dusr/novo")
-	public void novo() {
-		Dusr dusr = new Dusr();
-		dusr = dusrRules.novo();
-		result.include("dusr", dusr);		
+	public UsuarioStatus[] novo() {
+		return UsuarioStatus.values();
 	}
-	
-	@Public
+
+
+
+	//
 	@Delete("/dusr/{dusr.id}")
 	public void remover(Dusr dusr) {
-	  repository.remove(dusr.getId());
-
-	  result
-	  .include("message", "Contato removido com sucesso!")
-	  .redirectTo(this).listagem();
+		repository.remove(dusr.getId());
+		result
+		.include("message", "Contato removido com sucesso!")
+		.redirectTo(this).listagem();
 	}
-	
-	@Public
+
+	//
 	@Post("/dusr")
-	public void salvar(final Dusr dusr) {		
-		dusrRules.atualizacao(dusr);		
+	public void salvar(final Dusr dusr) throws Exception {		
 		String senha = new Encriptacao().Encriptar(dusr.getDusrsenha());
-		dusr.setDusrsenha(senha);
-		
-		
-		
+		dusr.setDusrsenha(senha);		
 		validator.validate(dusr);
-		validator.checking(new Validations(){{			
-			//that(dusr.getAgdnome().isEmpty() == false,"erro", "O Nome n�o pode ser vazio");
-			that(dusr.getId()!= null ,"erro","Favor informar usu�rio");
+		validator.checking(new Validations(){{
+			that(dusr.getId()!= null ,"erro","Favor informar usuário");
 		}});		
 		validator.onErrorUsePageOf(this).novo();
-		
+
 		try {
 			repository.save(dusr);			
 			result
-			.include("message", "Contato c�digo "+ dusr.getId() + " salvo com sucesso!!!" )
+			.include("message", "Contato código "+ dusr.getId() + " salvo com sucesso!!!" )
 			.redirectTo(this).listagem();
-			
+
 		} catch (Exception e) {
 			System.err.println("Erro");
 		}			
 	}
-	
-	@Public
-	@Get("/negado")
-	public void negado() {
-		
-	}
+
+
+
+	@Post("/dusr/atualiza")
+	public void atualiza(final Dusr dusr ,UploadedFile foto)  {
+		Dusr dusrDb = new Dusr();
+		dusrDb = repository.loadById(dusr.getId());		
+		if (foto != null){
+			dusr.setDusrFotoB(uploadFoto.converter(foto));
+			dusr.setDusrFotoBext(uploadFoto.extensao(foto));
+		}else {
+			dusr.setDusrFotoB(dusrDb.getDusrFotoB());			
+		}
+
+		try {
+			dusr.setDusrusr(userSession.getUser().getId().shortValue());
+
+		} catch (Exception e) {
+			dusr.setDusrusr((short) 0);
+			System.out.println("Nenhum usuário logado");			
+		}
+
+		validator.validate(dusr);
+		validator.checking(new Validations(){{			
+			that(dusr.getId()!= null ,"erro","Favor informar usuário");
+		}});		
+		validator.onErrorUsePageOf(this).editar(dusr);
+
+		try {
+			repository.save(dusr);			
+			result
+			.include("message", "Contato código "+ dusr.getId() + " salvo com sucesso!!!" )
+			.redirectTo(this).editar(dusr);
+
+		} catch (Exception e) {
+			System.err.println("Erro");
+		}			
+	}   
+
+
+	@Get("/dusr/{dusr.id}/imagem")
+	public Download downloadImage(Dusr dusr) {
+		dusr = repository.loadById(dusr.getId());
+		String nomeArq = ("dusr-" + dusr.getId() + "-Foto." + dusr.getDusrFotoBext());		
+		byte[] foto = dusr.getDusrFotoB();			
+		try {				
+			//convert array of bytes into file
+			FileOutputStream fileOuputStream = new FileOutputStream("e:\\imagens\\" + nomeArq); 
+			fileOuputStream.write(foto);
+			fileOuputStream.close();
+			System.out.println("Done");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		File file = new File("e:\\imagens\\" + nomeArq);	
+		if (!file.exists()) {
+			return new FileDownload(new File("e:\\teste.jpg", "default.jpg"), "image/jpg", "default.jpg");
+		}
+		String fileName = dusr.getDusrnome().replaceAll(" ", "-") + ".jpg";
+		return new FileDownload(file, "image/jpg", fileName);
+	}	
 }

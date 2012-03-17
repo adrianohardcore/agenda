@@ -2,6 +2,7 @@ package interceptor;
 
 import javax.servlet.http.HttpServletResponse;
 
+import annotation.NoCache;
 import br.com.caelum.vraptor.InterceptionException;
 import br.com.caelum.vraptor.Intercepts;
 import br.com.caelum.vraptor.core.InterceptorStack;
@@ -21,7 +22,8 @@ public class NoCacheInterceptor
     }
 
     public boolean accepts(ResourceMethod method) {
-        return true; // allow all requests
+        //return true; // allow all requests
+        return method.containsAnnotation(NoCache.class);
     }
 
     public void intercept(InterceptorStack stack, ResourceMethod method, 

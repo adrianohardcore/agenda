@@ -26,7 +26,7 @@ public class Dser extends AbstractEntity  {
 	@Column(name = "DSERNOME")
 	private String dsernome;
 	@Column(name = "DSERSERIAL")
-	private long dserserial;
+	private Long dserserial;
 	@Column(name = "DSERDTALT")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dserdtalt;
@@ -51,12 +51,7 @@ public class Dser extends AbstractEntity  {
 	public String getDsernome() {
 		return dsernome.trim();
 	}
-	public void setDserserial(Long dserserial) {
-		this.dserserial = dserserial;
-	}
-	public Long getDserserial() {	
-		return dserserial;
-	}
+	
 	public void setDserdtalt(Date dserdtalt) {
 		this.dserdtalt = dserdtalt;
 	}
@@ -105,6 +100,13 @@ public class Dser extends AbstractEntity  {
 	public DserPK getId() {
 		return id;
 	}
+	public Long getDserserial() {
+		return dserserial;
+	}
+	public void setDserserial(Long dserserial) {
+		this.dserserial = dserserial;
+	}
+	
 
 
 }

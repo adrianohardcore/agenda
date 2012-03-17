@@ -137,18 +137,18 @@ public class Agenda extends AbstractEntity {
 		this.id = id;
 	}
 	public String getAgdnome() {
-		return agdnome.trim();
+		return agdnome;
 	}
 	public void setAgdnome(String agdnome) {
 		this.agdnome = agdnome;
 	}
 	public String getAgdend() {
-		return agdend.trim();
+		return agdend;
 	}
 	public void setAgdend(String agdend) {
 		this.agdend = agdend;
 	}
-	public String getAgdbai() {
+	public String getAgdbai() { 
 		return agdbai;
 	}
 	public void setAgdbai(String agdbai) {

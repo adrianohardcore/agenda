@@ -21,10 +21,10 @@ public class DusrBusiness extends GenericBusiness<Dusr> implements DusrRepositor
 		Query query = manager.createQuery("select count(e.id) from Dusr e where e." + find + " like :search");
 		query.setParameter("search", "%" + search + "%");
 
-		return ((Long) query.getSingleResult()).intValue();
+		return ((Long) query.getSingleResult()).intValue();   
 	}
 
-	public Collection<Dusr> listByFilter(String search, int page, String sortName, String sortOrder, String find, int rows) {
+	public Collection<Dusr> listByFilter(String search, int page, String sortName, String sortOrder, String find, int rows) {		
 		String sql = "from Dusr e where e." + find + " like :search";
 		String order = " order by e." + find;
 

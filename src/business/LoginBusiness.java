@@ -19,7 +19,7 @@ public class LoginBusiness implements LoginRepository{
 		this.manager = manager;
 	}
 
-	public Dusr autenticar(Short usuario, String senha) {
+	public Dusr autenticar(Integer usuario, String senha) {
 		try {
 			Query query = manager.createQuery("from Dusr where id = :usuario and dusrsenha = :senha");
 			query.setParameter("usuario", usuario);

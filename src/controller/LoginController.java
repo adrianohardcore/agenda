@@ -3,6 +3,7 @@ package controller;
 import model.Dusr;
 import repository.LoginRepository;
 import util.Encriptacao;
+import annotation.NoCache;
 import annotation.Public;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
@@ -24,6 +25,7 @@ public class LoginController {
 		this.repository = repository;
 	}
 
+	@NoCache
 	@Public
 	@Get("/login")
 	public void login() {
@@ -33,13 +35,13 @@ public class LoginController {
 	@Public
 	@Post("/autenticar")
 	public void autenticar(Dusr dusr) {		
-		String senha = new Encriptacao().Encriptar(dusr.getDusrsenha());		
+		String senha = new Encriptacao().Encriptar(dusr.getDusrsenha());
 		Dusr user = repository.autenticar(dusr.getId(),senha);
 		if (user != null) {
 			userSession.setUser(user);
 			result.redirectTo(IndexController.class).index();
 		} else {
-			result.include("error", "Usu√°rio ou senha incorreta!").redirectTo(this).login();		
+			result.include("error", "Usu·rio ou senha incorreta!").redirectTo(this).login();		
 		}
 	}
  

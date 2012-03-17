@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.Collection;
+import java.util.Date;
 
 import model.Agenda;
 import model.common.EntityWrapper;
@@ -15,30 +16,31 @@ import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
 import br.com.caelum.vraptor.view.Results;
 
+import component.UserSession;
+
 @Resource
 public class AgendaController {
 
 	private final AgendaRepository repository;
 	private final Result result;
 	private final Validator validator;
+	private final UserSession userSession;
 	
 
-	public AgendaController(Result result, AgendaRepository repository, Validator validator) {
+	public AgendaController(Result result, AgendaRepository repository, Validator validator ,UserSession userSession) {
 		this.result = result;
 		this.repository = repository;
-		this.validator = validator;	
+		this.validator = validator;
+		this.userSession = userSession;	
 	}
 
-	@Public
+
 	@Get("/agenda/{agenda.id}/editar")
 	public void editar(Agenda agenda) {
 	  agenda = repository.loadById(agenda.getId());
-	  result.include("agenda", agenda).forwardTo(this).novo();
-	  
-	  
+	  result.include("agenda", agenda).forwardTo(this).novo();	  
 	}
 
-	@Public
 	@Get("/agenda/{agenda.id}")
 	public void exibir(Agenda agenda) {
 		agenda = repository.loadById(agenda.getId());		
@@ -48,7 +50,6 @@ public class AgendaController {
 	@Public
 	@Get("/agenda")
 	public void listagem() {
-
 	}
 
 	@Public
@@ -64,44 +65,38 @@ public class AgendaController {
 		.serialize();
 	}
 
-	@Public
 	@Get("/agenda/novo")
 	public void novo() {
-
 	}
-	
-	@Public
+
 	@Delete("/agenda/{agenda.id}")
 	public void remover(Agenda agenda) {
 	  repository.remove(agenda.getId());
-
 	  result
 	  .include("message", "Contato removido com sucesso!")
 	  .redirectTo(this).listagem();
 	}
 	
-	@Public
 	@Post("/agenda")
-	public void salvar(final Agenda agenda) throws Exception {
+	public void salvar(final Agenda agenda) {		
 		Integer num = 0 ;
+		agenda.setAgddtalt(new Date());
+		agenda.setAgdusr(userSession.getUser().getId().shortValue());		
 		if (agenda.getId() == null){
-			num = repository.CarregaNumCod(); 
-			System.out.println("####################################AtenÃ§Ã£o");
-			System.out.println(num);
-			
+			num = repository.CarregaNumCod();  
 			agenda.setId((int) num);			
 		}		
 		validator.validate(agenda);
 		validator.checking(new Validations(){{			
-			that(agenda.getAgdnome().isEmpty() == false,"erro", "O Nome nï¿½o pode ser vazio");			
+			that(agenda.getAgdnome().isEmpty() == false,"erro", "O Nome não pode ser vazio");			
 		}});		
 		validator.onErrorUsePageOf(this).novo();
 		repository.save(agenda);
 		if (num > 0){
-			repository.saveCod(num);	
+			repository.saveCod(num);	  
 		}		
 		result
-		.include("message", "Contato cï¿½digo "+ agenda.getId() + " salvo com sucesso!!!" )
+		.include("message", "Contato código "+ agenda.getId() + " salvo com sucesso!!!" )
 		.redirectTo(this).listagem();	
 	}
 }

@@ -18,7 +18,7 @@
 
 						evenOdd : true,
 						find : 'dusrnome',
-						findsName   : [ [ 'dusrnome', 'Nome' ],[ 'id', 'Usuário' ],[ 'dusnomec', 'Nome Completo']],
+						findsName   : [ [ 'dusrnome', 'Nome' ],[ 'dusnomec', 'Nome Completo']],
 						headersName : [ [ 'id', 'Usuário' ],[ 'dusrnome', 'Nome' ],[ 'dusnomec', 'Nome Completo']],
 						hoverFx : false,
 						url : '${pageContext.request.contextPath}/dusr/gridy'

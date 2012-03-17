@@ -13,6 +13,6 @@ public interface DserRepository extends GenericRepository<Dser> {
 
 	Collection<Dser> listByFilter(String search, int page, String sortName, String sortOrder, String find, int rows);
 	
-	public Integer getSerial(Integer dserEst, String dserPar) throws Exception;
+	public Integer getSerial(Integer dserEst, String dserPar);
 
 }

@@ -615,7 +615,7 @@ public class Dest extends AbstractEntity{
 	public void setDestusr(short destusr) {
 		this.destusr = destusr;
 	}
-	public short getDestImpFis() {
+	public short getDestImpFis() {		
 		return destImpFis;
 	}
 	public void setDestImpFis(short destImpFis) {
