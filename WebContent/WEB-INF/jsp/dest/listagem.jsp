@@ -1,5 +1,5 @@
 <head>
-<title>Agenda | Serialização [listagem]</title>
+<title>Agenda | SerializaÃ§Ã£o [listagem]</title>
 </head>
 <body>
 	<div class="gridy-search">
@@ -17,35 +17,34 @@
 						clickFx : true,
 
 						evenOdd : true,
-						find : 'id.dserpar',
-						findsName : [ [ 'id.dserpar', 'Par' ],[ 'id.dserest', 'Estabelecimento' ],[ 'dsernome', 'Nome' ] ],
-						headersName : [ [ 'id.dserest', 'Estabelecimento' ],[ 'id.dserpar', 'Parâmetro' ],[ 'dsernome', 'Nome' ],['dserserial','Serial']  ],
+						find : 'destnome',
+						findsName : [[ 'destnome', 'Nome' ],[ 'destfan', 'Fantasia' ] ],
+						headersName : [ [ 'id', 'CÃ³digo' ],[ 'destnome', 'Nome' ],[ 'destfan', 'Fantasia' ] ],
 						hoverFx : false,
-						url : '${pageContext.request.contextPath}/dser/gridy'
+						url : '${pageContext.request.contextPath}/dest/gridy'
 					});
 		});
 	</script>
 	<script id="template" type="text/x-jquery-tmpl">
 		<tr>
-			<td>\${id.dserest}</td>
-			<td>\${id.dserpar}</td>
-			<td>\${dsernome}</td>
-			<td>\${dserserial}</td>
+			<td>\${id}</td>
+			<td>\${destnome}</td>
+			<td>\${destfan}</td>			
 	
 			<td class="gridy-button">
-				<form action="${pageContext.request.contextPath}/dser/\${id.dserest}/\${id.dserpar}" method="get">
+				<form action="${pageContext.request.contextPath}/dest/\${id}" method="get">
 					<input  type="submit" value="exibir"/>
 				</form>
 			</td>		
 
 			<td class="gridy-button">
-				<form action="${pageContext.request.contextPath}/dser/\${id.dserest}/\${id.dserpar}/editar" method="get">
+				<form action="${pageContext.request.contextPath}/dest/\${id}/editar" method="get">
 					<input  type="submit" value="editar"/> 
 				</form>
 			</td>
 
 			<td class="gridy-button">
-				<form action="${pageContext.request.contextPath}/dser/\${id.dserest}/\${id.dserpar}" method="post">
+				<form action="${pageContext.request.contextPath}/dest/\${id}" method="post">
 					<input type="hidden" name="_method" value="delete"/>
 					<input onclick="return confirm('Deseja realmente excluir este registro?')" type="submit" value="remover"/>
 				</form>
